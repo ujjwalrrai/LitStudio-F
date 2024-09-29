@@ -1,0 +1,294 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LitStudio</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const Header = () => {
+            const [price, setPrice] = React.useState(30000); // Initialize price state
+
+            const handleSliderChange = (event) => {
+                setPrice(event.target.value); // Update price state on slider change
+            };
+
+            return (
+                <header className="bg-cover bg-center h-screen" style={{ backgroundImage: "url('./images/bg-1.jpg')" }}>
+                    <div className="bg-black bg-opacity-50 h-full">
+                        <nav className="flex justify-between items-center p-6">
+                            <div className="text-white text-2xl font-bold">
+                                <i className="fas fa-camera mr-2"></i>
+                                LitStudio
+                            </div>
+                            <div className="hidden md:flex space-x-6 text-white items-center">
+                                <a href="listing.html" className="hover:text-green-500">Browse Photographers</a>
+                                <a href="#" className="hover:text-green-500">Join as a Photographer</a>
+                                <a href="#" className="hover:text-green-500">About Us</a>
+                                <a href="admin-dashboard.html" className="bg-green-100 hover:bg-green-500 hover:text-white text-green-700 px-6 py-1 rounded-full w-full md:w-auto">Log in</a>
+                            </div>
+
+                        </nav>
+                        <div className="flex flex-col items-center justify-center h-3/4 text-center text-white px-4">
+                            <h1 className="text-4xl md:text-4xl font-bold mb-4">Capture your Moment with us. Book your Photoshoot today</h1>
+                            <p className="text-lg mb-8">#1 Website For photoshoot Booking</p>
+                            <div className="bg-white rounded-full p-2 flex justify-between md:flex-nowrap items-center md:space-y-0  w-full max-w-3xl">
+                                <select className="px-4 py-2 rounded-full border border-gray-300 w-full md:w-auto text-black" >
+                                    <option>Categories</option>
+                                    <option>Food Photographers</option>
+                                    <option>Wedding Photographers</option>
+                                    <option>Personal Photoshoots</option>
+                                    <option>Baby Shower</option>
+                                    <option>Events Photography</option>
+                                    <option>Others</option>
+                                </select>
+
+                                <input type="text" placeholder="Location" className="px-4 py-2 rounded-full border border-gray-300 w-full md:w-auto" />
+                                <div className="flex flex-col w-full md:w-auto">
+                                    <input
+                                        type="range"
+                                        min="0"
+                                        max="10000"
+                                        value={price}
+                                        onChange={handleSliderChange}
+                                        className="slider"
+                                    />
+                                    <span className="text-gray-700">Price: ₹{price}</span>
+                                </div>
+                                <button className="bg-green-500 text-white px-6 py-2 rounded-full w-full md:w-auto">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+            );
+        };
+
+        const PropertyCard = ({ price, location, type, image }) => (
+            <div className=" bg-white rounded-lg shadow-lg overflow-hidden">
+                {/* Increased the image height */}
+                <img src={image} alt={location} className="w-full h-56 object-cover" />
+
+                {/* Adjusted the layout inside the card */}
+                <div className="p-4 text-center">
+                    {/* Centered and bolded location text */}
+                    <div className="text-lg font-bold mb-2">{location}</div>
+
+                    {/* Type of property */}
+                    <div className="text-gray-500">{type}</div>
+
+                    {/* Price at the bottom */}
+                    <div className="text-xl font-bold text-blue-600 mt-4">{price}</div>
+                </div>
+            </div>
+        );
+
+        const PopularResidence = () => (
+            <section className="py-12 bg-gray-100">
+                <div className="container mx-auto px-5">
+                    <h2 className="text-3xl font-bold mb-8">Popular Categories</h2>
+                    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 ">
+                        <PropertyCard
+                            price="₹1,999"
+                            location="Event Photography"
+                            type="Starting From"
+                            image="https://i.pinimg.com/564x/b9/f4/a2/b9f4a26083f1072e40add25d7dcab559.jpg"
+                        />
+                        <PropertyCard
+                            price="₹20,000"
+                            location="Wedding Photography"
+                            type="Starting From"
+                            image="https://i.pinimg.com/564x/26/90/bd/2690bd3325ad952bb0fd08298ec73bba.jpg"
+                        />
+                        <PropertyCard
+                            price="₹999"
+                            location="Personal Photoshoot"
+                            type="Starting From"
+                            image="https://i.pinimg.com/564x/0c/ea/d9/0cead9a5bf1380a3458aa59b1d2260d2.jpg"
+                        />
+                        <PropertyCard
+                            price="₹1,999"
+                            location="Product Photography"
+                            type="Starting From"
+                            image="https://i.pinimg.com/564x/ad/dd/36/addd36aa1df1ad097b76117d3e26c548.jpg"
+                        />
+                        <PropertyCard
+                            price="₹1,999"
+                            location="Food Photography"
+                            type="Starting From"
+                            image="https://i.pinimg.com/564x/92/eb/af/92ebafdca02b03daaac3953193ad1297.jpg"
+                        />
+                    </div>
+                </div>
+            </section>
+        );
+
+        // export default PopularResidence;
+
+
+        const RealEstateHelp = () => (
+            <section className="py-12 bg-white">
+                <div className="container mx-auto px-4">
+                    <h2 className="text-3xl font-bold mb-8">See how LitStudio can hep you</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="bg-gray-100 rounded-lg p-6">
+                            <img src="https://i.pinimg.com/564x/60/0e/b8/600eb819b4304a66354283655f0344cd.jpg" alt="Book a Photoshoot" className="w-full h-48 object-cover rounded-lg mb-4" />
+                            <h3 className="text-xl font-bold mb-2">Book a Photoshoot</h3>
+                            <p className="text-gray-600 mb-4">Capture your best moments with top-rated photographers at LitStudio.in—where every shot tells your story!</p>
+                            <a href="listing.html" className="bg-green-400 hover:bg-green-500 text-white px-6 py-2 rounded-full">
+                                Search
+                            </a>
+
+                        </div>
+                        <div className="bg-gray-100 rounded-lg p-6">
+                            <img src="https://i.pinimg.com/564x/ca/b2/d5/cab2d5994e7f8e1ec458159c3dbfead9.jpg" alt="Join as photographer" className="w-full h-48 object-cover rounded-lg mb-4" />
+                            <h3 className="text-xl font-bold mb-2">Join us as Photographer</h3>
+                            <p className="text-gray-600 mb-4">Join LitStudio.in and showcase your talent to a wider audience, while earning more with exclusive premium bookings</p>
+                            <button className="bg-green-400 hover:bg-green-500 hover:bg-green-500 text-white px-6 py-2 rounded-full">Join now</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const MapSection = () => (
+            <section className="py-12 bg-gray-100">
+                <div className="container mx-auto px-4">
+                    <h2 className="text-3xl font-bold text-center mb-8">
+                        Find a photographer based on your <span className="text-green-500">Location</span>
+                    </h2>
+                    <div className="relative h-96 bg-gray-300 rounded-lg">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15071.496568863718!2d73.00510519999999!3d19.2006987!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1727544908901!5m2!1sen!2sin"
+                            width="500"
+                            height="500"
+                            style={{ border: 0 }}
+                            allowFullScreen=""
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                            className="w-full h-full"
+                        ></iframe>
+                    </div>
+                </div>
+            </section>
+        );
+
+
+        const NewlyListedHomes = () => (
+            <section className="py-12 bg-white">
+                <div className="container mx-auto px-4">
+                    <h2 className="text-3xl font-bold mb-8">Newly listed Photographers</h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <PropertyCard price="₹1,999" location="Colors Digital Studio" type="Specialise in personal photoshoot" image="https://content.jdmagicbox.com/comp/north-24-parganas/m9/9999pxx33.xx33.221014224610.i5m9/catalogue/dippro-productions-ltd-north-24-parganas-photographers-jiee4k3gyt-250.jpg" />
+                        <PropertyCard price="₹2,499" location="Chitra Photo Studio" type="Book a photoshoot now" image="https://content.jdmagicbox.com/comp/visakhapatnam/v1/0891px891.x891.230531231603.t6v1/catalogue/sri-photography-koruprolu-visakhapatnam-photo-studios-3s8hu10zaz.jpg" />
+                        <PropertyCard price="₹30,000" location="Rubi Studio" type="Wedding photographer" image="https://images.unsplash.com/photo-1647949940712-bfcf82015d9b?q=80&w=1425&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Stats = () => (
+            <section className="py-12 bg-gray-800 text-white">
+                <div className="container mx-auto px-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                        <div>
+                            <div className="text-4xl font-bold">10+</div>
+                            <div className="text-gray-400">Photographers Listed</div>
+                        </div>
+                        <div>
+                            <div className="text-4xl font-bold">4k+</div>
+                            <div className="text-gray-400">Photoshoots Completed</div>
+                        </div>
+                        <div>
+                            <div className="text-4xl font-bold">22k+</div>
+                            <div className="text-gray-400">People trust us for photographer</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Footer = () => (
+            <footer className="bg-gray-900 text-white py-12">
+                <div className="container mx-auto px-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div>
+                            <h3 className="text-xl font-bold mb-4">LitStudio</h3>
+                            <ul className="space-y-2">
+                                <li><a href="#" className="hover:underline">About</a></li>
+                                <li><a href="#" className="hover:underline">Services</a></li>
+                                <li><a href="#" className="hover:underline">Photographers profiles</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 className="text-xl font-bold mb-4">Support</h3>
+                            <ul className="space-y-2">
+                                <li><a href="#" className="hover:underline">FAQ</a></li>
+                                <li><a href="#" className="hover:underline">Contact Us</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 className="text-xl font-bold mb-4">Photoshoots</h3>
+                            <ul className="space-y-2">
+                                <li><a href="#" className="hover:underline">Browse Categories</a></li>
+                                <li><a href="#" className="hover:underline">Browse Locations</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 className="text-xl font-bold mb-4">Subscribe and become first to get Offers</h3>
+                            <form className="space-y-4">
+                                <input type="email" placeholder="Your email address..." className="w-full px-4 py-2 rounded-full text-gray-900" />
+                                <button className="bg-green-500 hover:bg-green-500 text-white px-6 py-2 rounded-full w-full">Subscribe</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div className="mt-8 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+                        <div className="text-gray-400">© 2024  LitStudio. All rights reserved.</div>
+                        <div className="flex space-x-4 mt-4 md:mt-0">
+                            <a href="#" className="hover:underline">Privacy</a>
+                            <a href="#" className="hover:underline">Cookie Settings</a>
+                            <a href="#" className="hover:underline">Terms</a>
+                        </div>
+                        <div className="flex space-x-4 mt-4 md:mt-0">
+                            <a href="#" className="text-gray-400 hover:text-white"><i className="fab fa-instagram"></i></a>
+                            <a href="#" className="text-gray-400 hover:text-white"><i className="fab fa-facebook"></i></a>
+                            <a href="#" className="text-gray-400 hover:text-white"><i className="fab fa-youtube"></i></a>
+                            <a href="#" className="text-gray-400 hover:text-white"><i className="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        );
+
+        const App = () => (
+            <div>
+                <Header />
+                <main>
+                    <PopularResidence />
+                    <RealEstateHelp />
+                    <MapSection />
+                    <NewlyListedHomes />
+                    <Stats />
+                </main>
+                <Footer />
+            </div>
+        );
+
+        ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+</body>
+
+</html>

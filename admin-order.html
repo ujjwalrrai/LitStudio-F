@@ -1,0 +1,198 @@
+<html></html>
+<head>
+    <title>Deals Dashboard</title>
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState } = React;
+
+        const App=()=> {
+            return (
+                <div className="flex">
+                    <Sidebar />
+                    <MainContent />
+                </div>
+            );
+        }
+
+
+        const Sidebar = () => {
+            return (
+                <div className="bg-gray-900 text-white w-64 min-h-screen p-4">
+                    <div className="flex items-center mb-8">
+                        <i  className="fas fa-home text-3xl"></i>
+                    </div>
+                    <nav className="space-y-4">
+                        <NavItem icon="fas fa-home" label="Home" to="index.html" />
+                        <NavItem icon="fas fa-tachometer-alt" label="Dashboard" to="admin-dashboard.html" />
+                      
+                        <NavItem icon="fas fa-handshake" label="Deals" to="admin-order.html" />
+ {/* Update here */}
+                        
+                        <NavItem icon="fas fa-users" label="Customers" to="/customers" />
+                        <NavItem icon="fas fa-credit-card" label="Payments" to="/payments" />
+                        <NavItem icon="fas fa-calendar-alt" label="Schedule 
+                                                                                  " to="/schedule" />
+                    </nav>
+
+                    <div className="mt-10 flex items-center space-x-4">
+                        <img src="https://placehold.co/40x40" alt="Agent profile" className="rounded-full w-10 h-10" />
+                        <div>
+                            <p>Rubi Studio</p>
+                            <p className="text-sm text-gray-400">rubistudio@gmail.com</p>
+                        </div>
+                    </div>
+                    <div className="mt-4">
+                        <button className="w-full text-left text-gray-400 hover:text-white">Profile</button>
+                        <button className="w-full text-left text-gray-400 hover:text-white">Logout</button>
+                    </div>
+                </div>
+            );
+        };
+        const NavItem = ({ icon, label, to, active }) => {
+            return (
+                <a href={to} className={`flex items-center space-x-2 p-2 ${active ? 'bg-white text-gray-900' : 'hover:bg-gray-800'}`}>
+                    <i className={icon}></i>
+                    <span>{label}</span>
+                </a>
+            );
+        };
+
+        // function NavItem({ icon, label, active }) {
+        //     return (
+        //         <div className={`flex items-center space-x-2 p-2 rounded ${active ? 'bg-white text-gray-900' : 'hover:bg-gray-800'}`}>
+        //             <i className={`${icon} text-lg`}></i>
+        //             <span>{label}</span>
+        //         </div>
+        //     );
+        // }
+
+        function MainContent() {
+            return (
+                <div className="flex-1 p-6">
+                    <Header />
+                    <Deals />
+                </div>
+            );
+        }
+
+        function Header() {
+            return (
+                <div className="flex items-center justify-between mb-6">
+                    <input type="text" placeholder="Search by Title or Property Address" className="p-2 rounded bg-gray-200 w-1/3" />
+                    <div className="flex items-center space-x-4">
+                        <i className="fas fa-globe text-xl"></i>
+                        <i className="fas fa-bell text-xl"></i>
+                        <i className="fas fa-envelope text-xl"></i>
+                        <i className="fas fa-cog text-xl"></i>
+                    </div>
+                </div>
+            );
+        }
+
+        function Deals() {
+            return (
+                <div>
+                    <h1 className="text-2xl font-semibold mb-4">Deals</h1>
+                    <div className="grid grid-cols-2 gap-4 mb-6">
+                        <div className="bg-white p-4 rounded shadow">
+                            <p className="text-gray-500">Catogories listed</p>
+                            <p className="text-3xl font-semibold">3</p>
+                        </div>
+                        <div className="bg-white p-4 rounded shadow flex items-center justify-between">
+                            <div>
+                                <p className="text-3xl font-semibold">62</p>
+                                <p className="text-gray-500">Orders</p>
+                            </div>
+                            <div className="flex space-x-4">
+                                <div className="text-center">
+                                    <p className="text-xl font-semibold">6</p>
+                                    <p className="text-gray-500">Pending</p>
+                                </div>
+                                <div className="text-center">
+                                    <p className="text-xl font-semibold">56</p>
+                                    <p className="text-gray-500">Completed</p>
+                                </div>
+                                <div className="text-center">
+                                    <p className="text-xl font-semibold">0</p>
+                                    <p className="text-gray-500">Cancelled</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex items-center space-x-4 mb-4">
+                        <button className="bg-green-500 text-white p-2 rounded">Filter</button>
+                        <input type="text" placeholder="Search customer name here..." className="p-2 rounded bg-gray-200 flex-1" />
+                        <select className="p-2 rounded bg-gray-200">
+                            <option>Any status</option>
+                        </select>
+                        <select className="p-2 rounded bg-gray-200">
+                            <option>Newest</option>
+                        </select>
+                        <button className="bg-green-500 text-white p-2 rounded">+ New Order</button>
+                    </div>
+                    <div className="bg-white rounded shadow overflow-hidden">
+                        <table className="w-full text-left">
+                            <thead className="bg-gray-200">
+                                <tr>
+                                    <th className="p-4">Order ID</th>
+                                    <th className="p-4">Date</th>
+                                    <th className="p-4">Customer</th>
+                                    <th className="p-4">Catogory</th>
+                                    
+                                    <th className="p-4">Price</th>
+                                    <th className="p-4">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr className="border-b">
+                                    <td className="p-4">#16</td>
+                                    <td className="p-4">22/5/24</td>
+                                    <td className="p-4">Rakesh Sharma</td>
+                                    <td className="p-4">Dombivli,Maharashtra</td>
+                                    
+                                    <td className="p-4">₹1999</td>
+                                    <td className="p-4">Pending</td>
+                                </tr>
+                                <tr className="border-b">
+                                    <td className="p-4">#15</td>
+                                    <td className="p-4">25/5/24</td>
+                                    <td className="p-4">Rahul</td>
+                                    <td className="p-4">Ghatkopar, Maharashtra</td>
+                                    
+                                    <td className="p-4">₹1999</td>
+                                    <td className="p-4">Pending</td>
+                                </tr>
+                                <tr className="border-b">
+                                    <td className="p-4">#6</td>
+                                    <td className="p-4">2/6/24</td>
+                                    <td className="p-4">Utkarsh</td>
+                                    <td className="p-4">Andheri,Maharashtra</td>
+                                    
+                                    <td className="p-4">₹1999</td>
+                                    <td className="p-4">Completed</td>
+                                </tr>
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<html>
+<head>
+    <title>Payments</title>
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState } = React;
+
+        function NavItem({ icon, label, to, active }) {
+            return (
+                <a href={to} className={`flex items-center p-2 rounded transition-colors ${active ? 'bg-gray-800' : ''}`}>
+                    <i className={`${icon} mr-2`}></i>
+                    {label}
+                </a>
+            );
+        }
+
+        const Sidebar = () => {
+            return (
+                <div className="bg-gray-900 text-white w-64 min-h-screen p-4">
+                    <div className="flex items-center mb-8">
+                        <i className="fas fa-home text-3xl"></i>
+                    </div>
+                    <nav className="space-y-4">
+                        <NavItem icon="fas fa-tachometer-alt" label="Dashboard" to="admin-dashboard.html" />
+                      
+                        <NavItem icon="fas fa-handshake" label="Deals" to="admin-order.html" />
+ {/* Update here */}
+                        
+                        <NavItem icon="fas fa-users" label="Customers" to="/customers" />
+                        <NavItem icon="fas fa-credit-card" label="Payments" to="/payments" />
+                        <NavItem icon="fas fa-calendar-alt" label="Schedule" to="/schedule" />
+                    </nav>
+            <div className="mt-auto flex items-center space-x-4">
+                <img src="https://placehold.co/40x40" alt="Agent profile" className="rounded-full w-10 h-10" />
+                <div>
+                    <p>Agent</p>
+                    <p className="text-sm text-gray-400">test1@demo.com</p>
+                </div>
+            </div>
+            <div className="mt-4">
+                <button className="w-full text-left text-gray-400 hover:text-white">Profile</button>
+                <button className="w-full text-left text-gray-400 hover:text-white">Logout</button>
+            </div>
+        </div>
+    );
+}
+
+
+        function App() {
+            const [searchTerm, setSearchTerm] = useState('');
+            const [orderTypeFilter, setOrderTypeFilter] = useState('All');
+            const [sortConfig, setSortConfig] = useState({ key: 'date', direction: 'descending' });
+
+            const payments = [
+                { id: '#17', date: '20/05/242024', customer: 'User1 Test', property: 'Los Angeles, CA, USA', orderId: '#17', orderType: 'Rental', propertyPrice: '$1080/mo', revenue: '$100', monthlyRent: '—', status: 'Paid' },
+                { id: '#16', date: '20/05/242024', customer: 'User1 Test', property: 'Berlin, Germany', orderId: '#16', orderType: 'Deal', propertyPrice: '$435000', revenue: '$1', monthlyRent: '—', status: 'Paid' },
+                { id: '#15', date: '20/05/242024', customer: 'User1 Test', property: 'Miami, FL, USA', orderId: '#15', orderType: 'Deal', propertyPrice: '$418000', revenue: '$100', monthlyRent: '—', status: 'Paid' },
+                
+            ];
+
+            // Function to handle sorting
+            const sortedPayments = [...payments].sort((a, b) => {
+                const aValue = a[sortConfig.key];
+                const bValue = b[sortConfig.key];
+                if (aValue < bValue) {
+                    return sortConfig.direction === 'ascending' ? -1 : 1;
+                }
+                if (aValue > bValue) {
+                    return sortConfig.direction === 'ascending' ? 1 : -1;
+                }
+                return 0;
+            });
+
+            // Filter payments based on search and order type
+            const filteredPayments = sortedPayments.filter(payment => {
+                const matchesSearchTerm = payment.customer.toLowerCase().includes(searchTerm.toLowerCase());
+                const matchesOrderType = orderTypeFilter === 'All' || payment.orderType === orderTypeFilter;
+                return matchesSearchTerm && matchesOrderType;
+            });
+
+            return (
+                <div className="flex">
+                    <Sidebar />
+                    <main className="flex-1 p-4">
+                        <h1 className="text-3xl font-semibold mb-6">Payments</h1>
+                        <div className="mb-4">
+                            <input
+                                type="text"
+                                placeholder="Search Customer..."
+                                value={searchTerm}
+                                onChange={e => setSearchTerm(e.target.value)}
+                                className="p-2 border border-gray-300 rounded w-full"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <select value={orderTypeFilter} onChange={e => setOrderTypeFilter(e.target.value)} className="p-2 border border-gray-300 rounded">
+                                <option value="All">All Order Types</option>
+                                <option value="Rental">Rental</option>
+                                <option value="Deal">Deal</option>
+                            </select>
+                        </div>
+                        <table className="min-w-full bg-white rounded shadow">
+                            <thead>
+                                <tr className="bg-gray-200">
+                                    <th onClick={() => setSortConfig({ key: 'date', direction: sortConfig.direction === 'ascending' ? 'descending' : 'ascending' })} className="cursor-pointer px-4 py-2">Date <i className={`fas fa-sort-${sortConfig.direction === 'ascending' ? 'up' : 'down'}`}></i></th>
+                                    <th className="px-4 py-2">Customer</th>
+                                    <th className="px-4 py-2">Property</th>
+                                    <th className="px-4 py-2">Order ID</th>
+                                    <th className="px-4 py-2">Order Type</th>
+                                    <th className="px-4 py-2">Property Price</th>
+                                    <th className="px-4 py-2">Revenue</th>
+                                    <th className="px-4 py-2">Monthly Rent</th>
+                                    <th className="px-4 py-2">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {filteredPayments.map(payment => (
+                                    <tr key={payment.id} className="hover:bg-gray-100">
+                                        <td className="border px-4 py-2">{payment.date}</td>
+                                        <td className="border px-4 py-2">{payment.customer}</td>
+                                        <td className="border px-4 py-2">{payment.property}</td>
+                                        <td className="border px-4 py-2">{payment.orderId}</td>
+                                        <td className="border px-4 py-2">{payment.orderType}</td>
+                                        <td className="border px-4 py-2">{payment.propertyPrice}</td>
+                                        <td className="border px-4 py-2">{payment.revenue}</td>
+                                        <td className="border px-4 py-2">{payment.monthlyRent}</td>
+                                        <td className="border px-4 py-2">{payment.status}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </main>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
